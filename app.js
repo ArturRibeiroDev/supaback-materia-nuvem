@@ -31,11 +31,6 @@ app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-const supabase = 
-    supabaseClient.createClient('https://minhaurl', 
-        'minhaAPIKey')
-
-
 app.get('/products', async (req, res) => {
     const {data, error} = await supabase
         .from('products')
