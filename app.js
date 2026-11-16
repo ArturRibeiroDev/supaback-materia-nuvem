@@ -1,5 +1,8 @@
 //import express from 'express';
 const express = require('express');
+require('dotenv').config();
+
+const { createClient } = require('@supabase/supabase-js');
 
 //import createClient from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 //import {createClient} from '@supabase/supabase-js'
@@ -30,6 +33,12 @@ app.use(morgan('combined'));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SECRET_KEY
+);
+
 
 app.get('/products', async (req, res) => {
     const {data, error} = await supabase
@@ -99,10 +108,6 @@ app.delete('/products/:id', async (req, res) => {
 
 app.get('/', (req, res) => {
     res.send("Hello I am working my friend Supabase <3");
-});
-
-app.get('*', (req, res) => {
-    res.send("Hello again I am working my friend to the moon and behind <3");
 });
 
 app.listen(3000, () => {
